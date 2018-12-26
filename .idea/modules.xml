@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RecyclerViewTimer.iml" filepath="$PROJECT_DIR$/RecyclerViewTimer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TimerInRecyclerView.iml" filepath="$PROJECT_DIR$/TimerInRecyclerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
