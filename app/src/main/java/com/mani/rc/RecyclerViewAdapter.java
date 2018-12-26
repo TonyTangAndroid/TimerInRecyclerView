@@ -1,9 +1,8 @@
-package com.mani.rc;/**
- * Created by mani on 03/09/17.
- */
+package com.mani.rc;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,63 +10,44 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = RecyclerViewAdapter.class.getSimpleName();
 
-    private Context context;
-    private List<CustomTimer> list;
-    private OnItemClickListener onItemClickListener;
     private Handler handler = new Handler();
 
-    public RecyclerViewAdapter(Context context, List<CustomTimer> list,
-                               OnItemClickListener onItemClickListener) {
-        this.context = context;
-        this.list = list;
-        this.onItemClickListener = onItemClickListener;
+    public RecyclerViewAdapter() {
     }
 
     public void clearAll() {
         handler.removeCallbacksAndMessages(null);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(R.layout.recycler_item, parent, false);
         ButterKnife.bind(this, view);
 
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        //CustomTimer item = list.get(position);
-
-        //Todo: Setup viewholder for item
-        holder.bind(null, onItemClickListener);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind();
     }
 
     @Override
     public int getItemCount() {
-        return 100;//list.size();
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+        return 100;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // Todo Butterknife bindings
         @BindView(R.id.timestamp)
         TextView timeStamp;
         @BindView(R.id.bck)
@@ -80,16 +60,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             customRunnable = new CustomRunnable(handler, timeStamp, 10000, imageView);
         }
 
-        public void bind(final CustomTimer model, final OnItemClickListener listener) {
-      /*itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          listener.onItemClick(getLayoutPosition());
-        }
-      });*/
-
+        public void bind() {
             handler.removeCallbacks(customRunnable);
             customRunnable.holder = timeStamp;
-            customRunnable.millisUntilFinished = 10000 * getAdapterPosition(); //Current time - received time
+            customRunnable.millisUntilFinished = 10000 * getAdapterPosition();
             handler.postDelayed(customRunnable, 100);
 
         }
