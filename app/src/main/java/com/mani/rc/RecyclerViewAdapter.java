@@ -1,7 +1,6 @@
 package com.mani.rc;
 
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
-
-
-    private Handler handler = new Handler();
-
     public RecyclerViewAdapter() {
     }
 
