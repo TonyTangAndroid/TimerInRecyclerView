@@ -8,10 +8,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.uber.autodispose.AutoDispose.autoDisposable;
-
-public class ItemViewHolder extends AutoDisposeViewHolder {
-    private final RxCountdownTimer countdownTimer;
+public class ItemViewHolder extends AutoDisposeViewHolder implements Ticker.Callback {
+    private final Ticker ticker;
     @BindView(R.id.timestamp)
     TextView timeStamp;
     @BindView(R.id.bck)
@@ -19,29 +17,25 @@ public class ItemViewHolder extends AutoDisposeViewHolder {
 
     public ItemViewHolder(View itemView) {
         super(itemView);
-        countdownTimer = new RxCountdownTimer();
+        System.out.println("ItemViewHolder created");
+        ticker = new Ticker(this);
         ButterKnife.bind(this, itemView);
     }
 
     public void bind(long remain) {
-        countdownTimer.observe(remain).
-                as(autoDisposable(this)).subscribe(this::onTick, this::onError, this::onComplete);
+        ticker.start(remain, this);
+    }
 
+    @Override
+    public void onTick(long secondsUntilFinished) {
+        timeStamp.setText(String.valueOf(secondsUntilFinished));
+        System.out.println("remainTime:" + secondsUntilFinished);
     }
 
     @SuppressLint("SetTextI18n")
-    private void onComplete() {
-        timeStamp.setText("ended");
+    @Override
+    public void onFinish() {
+        timeStamp.setText("onFinish");
         System.out.println("onComplete:");
-    }
-
-    private void onError(Throwable throwable) {
-        timeStamp.setText(throwable.getMessage());
-
-    }
-
-    private void onTick(Long remainTime) {
-        timeStamp.setText(String.valueOf(remainTime));
-        System.out.println("remainTime:" + remainTime);
     }
 }
