@@ -17,10 +17,9 @@ public class CountdownTimerUnitTest {
 
     @Before
     public void setup() {
-
         testScheduler = new TestScheduler();
         CountdownTimer countdownTimer = new CountdownTimer(testScheduler);
-        Observable<Long> observable = countdownTimer.subscribe(10L);
+        Observable<Long> observable = countdownTimer.observe(10L);
         observer = observable.test();
     }
 
