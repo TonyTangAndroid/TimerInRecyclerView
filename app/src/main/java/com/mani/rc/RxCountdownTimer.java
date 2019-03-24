@@ -6,15 +6,15 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
-public class CountdownTimer {
+public class RxCountdownTimer {
 
     private final Scheduler scheduler;
 
-    public CountdownTimer() {
+    public RxCountdownTimer() {
         this(Schedulers.computation());
     }
 
-    public CountdownTimer(Scheduler scheduler) {
+    public RxCountdownTimer(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 

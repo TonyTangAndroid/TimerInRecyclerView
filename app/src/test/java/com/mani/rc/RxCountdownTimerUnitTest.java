@@ -10,7 +10,7 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 
-public class CountdownTimerUnitTest {
+public class RxCountdownTimerUnitTest {
 
     private TestScheduler testScheduler;
     private TestObserver<Long> observer;
@@ -18,7 +18,7 @@ public class CountdownTimerUnitTest {
     @Before
     public void setup() {
         testScheduler = new TestScheduler();
-        CountdownTimer countdownTimer = new CountdownTimer(testScheduler);
+        RxCountdownTimer countdownTimer = new RxCountdownTimer(testScheduler);
         Observable<Long> observable = countdownTimer.observe(10L);
         observer = observable.test();
     }

@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 public class ItemViewHolder extends AutoDisposeViewHolder {
-    private final CountdownTimer countdownTimer;
+    private final RxCountdownTimer countdownTimer;
     @BindView(R.id.timestamp)
     TextView timeStamp;
     @BindView(R.id.bck)
@@ -19,7 +19,7 @@ public class ItemViewHolder extends AutoDisposeViewHolder {
 
     public ItemViewHolder(View itemView) {
         super(itemView);
-        countdownTimer = new CountdownTimer();
+        countdownTimer = new RxCountdownTimer();
         ButterKnife.bind(this, itemView);
     }
 
