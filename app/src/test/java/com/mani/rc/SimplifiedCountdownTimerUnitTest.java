@@ -6,11 +6,12 @@ import org.junit.Test;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 
-public class CountdownTimerUnitTest {
+public class SimplifiedCountdownTimerUnitTest {
 
     private TestScheduler testScheduler;
     private TestObserver<Long> observer;
@@ -19,9 +20,9 @@ public class CountdownTimerUnitTest {
     public void setup() {
 
         testScheduler = new TestScheduler();
-        CountdownTimer countdownTimer = new CountdownTimer(testScheduler);
-        Observable<Long> observable = countdownTimer.subscribe(10L);
+        Observable<Long> observable = countdownTimer(10L, testScheduler);
         observer = observable.test();
+
     }
 
     @Test
@@ -38,6 +39,7 @@ public class CountdownTimerUnitTest {
         observer.assertNotComplete();
 
     }
+
 
     @Test
     public void emit_9_values_when_subscribed_and_advanced_by_9s_and_not_complete() {
@@ -59,9 +61,25 @@ public class CountdownTimerUnitTest {
 
     @Test
     public void emit_10_values_and_complete_when_subscribed_and_advanced_by_10s() {
+
         observer.assertNoValues();
         testScheduler.advanceTimeBy(10, TimeUnit.SECONDS);
         observer.assertComplete();
     }
+
+
+    private Observable<Long> countdownTimer(Long start, Scheduler testScheduler) {
+        return Observable.interval(1, TimeUnit.SECONDS, testScheduler)
+                .take(start).map(value -> start - value);
+    }
+
+    @Test
+    public void emit_3_values_when_subscribed_and_advanced_by_100s() {
+        observer = countdownTimer(3L, testScheduler).test();
+        testScheduler.advanceTimeBy(100, TimeUnit.SECONDS);
+        observer.assertValues(3L, 2L, 1L);
+        observer.assertComplete();
+    }
+
 
 }
