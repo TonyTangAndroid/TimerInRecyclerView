@@ -15,8 +15,8 @@ public class Ticker {
         this.countdownTimer = new RxCountdownTimer();
     }
 
-    public void start(long durationInSeconds, Callback callback) {
-        countdownTimer.observe(durationInSeconds).as(autoDisposable(provider)).subscribe(new DisposableObserver<Long>() {
+    public void start(long millisInFuture, Callback callback) {
+        countdownTimer.observe(millisInFuture).as(autoDisposable(provider)).subscribe(new DisposableObserver<Long>() {
             @Override
             public void onNext(Long secondsUntilFinished) {
                 callback.onTick(secondsUntilFinished);

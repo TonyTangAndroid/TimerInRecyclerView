@@ -30,9 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private List<Long> shift(List<Long> diff) {
         List<Long> result = new ArrayList<>(diff.size());
-        for (Long item : diff) {
-            result.add(item + 1553394032
-            );//Saturday, March 23, 2019 7:10:38 PM GMT-07:00
+        for (Long second : diff) {
+            result.add(second * 1000 + 1553394032000L);//Saturday, March 23, 2019 7:10:38 PM GMT-07:00
 
         }
         return result;
@@ -196,7 +195,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 NONE,
                 NONE,
                 NONE
-                );
+        );
     }
 
     @NonNull
@@ -210,11 +209,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        holder.bind(Math.max(list.get(position) - nowInSeconds(), 0L));
+        holder.bind(Math.max(list.get(position) - nowInMillseconds(), 0L));
     }
 
-    private long nowInSeconds() {
-        return System.currentTimeMillis() / 1000;
+    private long nowInMillseconds() {
+        return System.currentTimeMillis();
     }
 
     @Override

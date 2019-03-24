@@ -22,8 +22,8 @@ public class ItemViewHolder extends AutoDisposeViewHolder implements Ticker.Call
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(long remain) {
-        ticker.start(remain, this);
+    public void bind(long millisInFuture) {
+        ticker.start(millisInFuture, this);
     }
 
     @Override

@@ -9,7 +9,7 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 
-public class RxCountdownTimerEdgeUnitTest {
+public class RxCountdownTimeTestSuit_0 {
 
     @Test
     public void emit_no_values_when_subscribed_with_0s_remain_time() {
@@ -30,6 +30,5 @@ public class RxCountdownTimerEdgeUnitTest {
         RxCountdownTimer countdownTimer = new RxCountdownTimer(testScheduler);
         countdownTimer.observe(-1L);
     }
-
 
 }

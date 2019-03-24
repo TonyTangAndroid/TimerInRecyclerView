@@ -10,7 +10,7 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 
-public class RxCountdownTimerUnitTest {
+public class RxCountdownTimeTestSuit_2 {
 
     private TestScheduler testScheduler;
     private TestObserver<Long> observer;
@@ -19,7 +19,7 @@ public class RxCountdownTimerUnitTest {
     public void setup() {
         testScheduler = new TestScheduler();
         RxCountdownTimer countdownTimer = new RxCountdownTimer(testScheduler);
-        Observable<Long> observable = countdownTimer.observe(10L);
+        Observable<Long> observable = countdownTimer.observe(10L * 1000);
         observer = observable.test();
     }
 
@@ -33,18 +33,18 @@ public class RxCountdownTimerUnitTest {
 
         observer.assertNoValues();
         testScheduler.advanceTimeBy(2, TimeUnit.SECONDS);
-        observer.assertValues(10L, 9L);
+        observer.assertValues(10L, 9L, 8L);
         observer.assertNotComplete();
 
     }
 
     @Test
-    public void emit_9_values_when_subscribed_and_advanced_by_9s_and_not_complete() {
+    public void emit_10_values_when_subscribed_and_advanced_by_9s_and_complete() {
 
         observer.assertNoValues();
         testScheduler.advanceTimeBy(9500, TimeUnit.MILLISECONDS);
-        observer.assertValues(10L, 9L, 8L, 7L, 6L, 5L, 4L, 3L, 2L);
-        observer.assertNotComplete();
+        observer.assertValues(10L, 9L, 8L, 7L, 6L, 5L, 4L, 3L, 2L, 1L);
+        observer.assertComplete();
 
     }
 
@@ -61,6 +61,16 @@ public class RxCountdownTimerUnitTest {
         observer.assertNoValues();
         testScheduler.advanceTimeBy(10, TimeUnit.SECONDS);
         observer.assertComplete();
+    }
+
+    @Test
+    public void emit_4_values_when_subscribed_and_advanced_by_3s_and_not_complete() {
+
+        observer.assertNoValues();
+        testScheduler.advanceTimeBy(3000, TimeUnit.MILLISECONDS);
+        observer.assertValues(10L, 9L, 8L, 7L);
+        observer.assertNotComplete();
+
     }
 
 }

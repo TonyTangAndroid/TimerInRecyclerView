@@ -18,8 +18,14 @@ public class RxCountdownTimer {
         this.scheduler = scheduler;
     }
 
-    public Observable<Long> observe(Long start) {
-        return Observable.interval(1, TimeUnit.SECONDS, scheduler)
-                .take(start).map(value -> start - value);
+    public Observable<Long> observe(long millisInFuture) {
+        if (millisInFuture < 0) {
+            throw new IllegalArgumentException(" param millisInFuture must be larger or equal than 0");
+        }
+        long count = millisInFuture / 1000;
+        long initialDelay = millisInFuture % 1000;
+        return Observable.interval(initialDelay,
+                1000, TimeUnit.MILLISECONDS,
+                scheduler).take(count).map(value -> count - value);
     }
 }
