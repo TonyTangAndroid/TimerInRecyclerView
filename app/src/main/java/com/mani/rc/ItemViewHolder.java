@@ -32,6 +32,7 @@ public class ItemViewHolder extends AutoDisposeViewHolder {
     @SuppressLint("SetTextI18n")
     private void onComplete() {
         timeStamp.setText("ended");
+        System.out.println("onComplete:");
     }
 
     private void onError(Throwable throwable) {
@@ -41,5 +42,6 @@ public class ItemViewHolder extends AutoDisposeViewHolder {
 
     private void onTick(Long remainTime) {
         timeStamp.setText(String.valueOf(remainTime));
+        System.out.println("remainTime:" + remainTime);
     }
 }
